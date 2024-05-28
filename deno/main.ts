@@ -47,4 +47,4 @@ app.post('/text-to-speech', async (c) => {
   });
 });
 
-serve(app.fetch);
+Deno.serve(app.fetch);
