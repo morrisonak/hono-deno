@@ -2,15 +2,13 @@ import { Hono } from 'https://deno.land/x/hono@v4.2.4/mod.ts';
 
 const app = new Hono();
 
-
-
 app.post('/text-to-speech', async (c) => {
-  const { input } = await c.req.json();
+  const { text } = await c.req.json();
   const apiKey = Deno.env.get('OPENAI_API_KEY');
   
   // Ensure the text is provided
-  if (!input) {
-    return c.json({ error: 'input is required' }, 400);
+  if (!text) {
+    return c.json({ error: 'Text is required' }, 400);
   }
 
   // Fetch speech data from OpenAI Text-to-Speech API
@@ -21,12 +19,9 @@ app.post('/text-to-speech', async (c) => {
       'Authorization': `Bearer ${apiKey}`
     },
     body: JSON.stringify({
-      input: {
-        input: input
-      },
       model: "tts-1",
-      voice: "alloy",
-      output_format: "mp3"
+      input: text,
+      voice: "alloy"
     })
   });
 
@@ -35,7 +30,7 @@ app.post('/text-to-speech', async (c) => {
     return c.json({ error: 'Error with Text-to-Speech API', details: errorText }, ttsResponse.status);
   }
 
-  const mp3Data = await ttsResponse.body;
+  const mp3Data = await ttsResponse.arrayBuffer();
 
   // Set response headers to indicate the content type for streaming
   c.header('Content-Type', 'audio/mpeg');
