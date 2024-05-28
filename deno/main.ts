@@ -5,12 +5,12 @@ const app = new Hono();
 
 
 app.post('/text-to-speech', async (c) => {
-  const { text } = await c.req.json();
+  const { input } = await c.req.json();
   const apiKey = Deno.env.get('OPENAI_API_KEY');
   
   // Ensure the text is provided
-  if (!text) {
-    return c.json({ error: 'Text is required' }, 400);
+  if (!input) {
+    return c.json({ error: 'input is required' }, 400);
   }
 
   // Fetch speech data from OpenAI Text-to-Speech API
@@ -22,7 +22,7 @@ app.post('/text-to-speech', async (c) => {
     },
     body: JSON.stringify({
       input: {
-        text: text
+        input: input
       },
       model: "tts-1",
       voice: "alloy",
