@@ -24,7 +24,8 @@ app.post('/text-to-speech', async (c) => {
       input: {
         text: text
       },
-      voice: "text-to-speech-001",
+      model: "tts-1",
+      voice: "alloy",
       output_format: "mp3"
     })
   });
