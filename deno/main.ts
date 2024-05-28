@@ -5,7 +5,7 @@ const app = new Hono()
 
 app.use('*', logger(), poweredBy())
 app.get('/', (c) => {
-  return c.text('Hello Deno!')
+  return c.text('Hello From Deno!')
 })
 
 Deno.serve(app.fetch)
