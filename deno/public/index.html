@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Text to Speech</title>
+</head>
+<body>
+  <h1>Text to Speech</h1>
+  <textarea id="text-input" rows="4" cols="50" placeholder="Enter text here..."></textarea><br>
+  <button onclick="convertTextToSpeech()">Convert and Play</button>
+  <audio id="audio-player" controls></audio>
+
+  <script>
+    async function convertTextToSpeech() {
+      const text = document.getElementById('text-input').value;
+      const response = await fetch('/text-to-speech', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ text })
+      });
+
+      if (response.ok) {
+        const audioPlayer = document.getElementById('audio-player');
+        const blob = await response.blob();
+        const url = URL.createObjectURL(blob);
+        audioPlayer.src = url;
+        audioPlayer.play();
+      } else {
+        const error = await response.json();
+        console.error('Error:', error);
+      }
+    }
+  </script>
+</body>
+</html>
