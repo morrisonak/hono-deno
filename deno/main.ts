@@ -4,7 +4,7 @@ import { Hono } from 'https://deno.land/x/hono@v4.2.4/mod.ts';
 
 const app = new Hono();
 
-app.use('/', serveStatic({ root: '/public' }));
+app.use('/', serveStatic({ root: '/' }));
 
 app.post('/text-to-speech', async (c) => {
   const { text } = await c.req.json();
