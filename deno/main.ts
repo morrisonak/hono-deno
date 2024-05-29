@@ -1,10 +1,10 @@
-import { serveStatic } from "https://deno.land/x/hono@v3.7.5/adapter/deno/serve-static.ts";
+import { serveStatic } from "https://deno.land/x/hono@v4.3.11/adapter/deno/serve-static.ts";
 
 import { Hono } from 'https://deno.land/x/hono@v4.2.4/mod.ts';
 
 const app = new Hono();
 
-app.use('/', serveStatic({ root: '/' }));
+app.use('/public/*', serveStatic({ root: './' }));
 
 app.post('/text-to-speech', async (c) => {
   const { text } = await c.req.json();
