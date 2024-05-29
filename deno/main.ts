@@ -1,4 +1,4 @@
-import { serveStatic } from 'hono/deno';
+import { serveStatic } from "https://deno.land/x/hono@v3.7.5/adapter/deno/serve-static.ts";
 
 import { Hono } from 'https://deno.land/x/hono@v4.2.4/mod.ts';
 
