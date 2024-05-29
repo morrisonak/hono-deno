@@ -1,11 +1,16 @@
-import { serveStatic } from 'https://deno.land/x/hono@v4.2.4/middleware.ts';
+//import { serveStatic } from 'https://deno.land/x/hono@v4.2.4/middleware.ts';
 import { Hono } from 'https://deno.land/x/hono@v4.2.4/mod.ts';
 
 const app = new Hono();
-
-// Use absolute path to serve static files
-const publicDir = `${Deno.cwd()}/deno/public`;
-app.use('/', serveStatic({ root: publicDir }));
+app.get('/tts', async (c) => {
+  try {
+    const htmlContent = await Deno.readTextFile('./public/index.html'); // or './public/tts.html'
+    c.header('Content-Type', 'text/html');
+    c.body(htmlContent);
+  } catch (e) {
+    c.status(404).body('File not found');
+  }
+});
 
 // Define the /text-to-speech endpoint
 app.post('/text-to-speech', async (c) => {
