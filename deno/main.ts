@@ -4,7 +4,7 @@ import { Hono } from 'https://deno.land/x/hono@v4.2.4/mod.ts';
 const app = new Hono();
 
 // Use absolute path to serve static files
-const publicDir = `${Deno.cwd()}/public`;
+const publicDir = `${Deno.cwd()}/deno/public`;
 app.use('/', serveStatic({ root: publicDir }));
 
 // Define the /text-to-speech endpoint
