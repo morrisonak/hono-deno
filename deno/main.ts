@@ -1,11 +1,13 @@
-import { serveStatic } from "https://deno.land/x/hono@v4.3.11/adapter/deno/serve-static.ts";
-
+import { serveStatic } from 'https://deno.land/x/hono@v4.2.4/middleware.ts';
 import { Hono } from 'https://deno.land/x/hono@v4.2.4/mod.ts';
 
 const app = new Hono();
 
-app.use('/', serveStatic({ root: './public' }));
+// Use absolute path to serve static files
+const publicDir = `${Deno.cwd()}/public`;
+app.use('/', serveStatic({ root: publicDir }));
 
+// Define the /text-to-speech endpoint
 app.post('/text-to-speech', async (c) => {
   const { text } = await c.req.json();
   const apiKey = Deno.env.get('OPENAI_API_KEY');
@@ -47,4 +49,5 @@ app.post('/text-to-speech', async (c) => {
   });
 });
 
+// Serve the app
 Deno.serve(app.fetch);
