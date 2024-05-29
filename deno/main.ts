@@ -4,7 +4,7 @@ import { Hono } from 'https://deno.land/x/hono@v4.2.4/mod.ts';
 const app = new Hono();
 app.get('/tts', async (c) => {
   try {
-    const htmlContent = await Deno.readTextFile('./public/index.html'); // or './public/tts.html'
+    const htmlContent = await Deno.readTextFile('./tts.html'); // or './public/tts.html'
     c.header('Content-Type', 'text/html');
     c.body(htmlContent);
   } catch (e) {
